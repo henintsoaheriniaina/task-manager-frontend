@@ -10,7 +10,7 @@ Pour toute question : rasolomampiononahenintsoaherin@gmail.com
 
 ## 🌐 Déploiement
 
-Le backend est déployé et accessible à l'adresse : [https://task-manager-backend-qzy2.onrender.com](https://task-manager-backend-qzy2.onrender.com)
+Le frontend est déployé et accessible à l'adresse : [power-tasks.vercel.app/](https://power-tasks.vercel.app/)
 
 ---
 
