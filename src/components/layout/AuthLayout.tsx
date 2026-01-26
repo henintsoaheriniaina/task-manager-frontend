@@ -1,4 +1,6 @@
+import useAuthStore from "@/stores/auth-store";
 import type { ReactNode } from "react";
+import { Navigate } from "react-router";
 import { CardContent, CardHeader, CardTitle } from "../ui/card";
 import { TypographyH2 } from "../ui/typography";
 interface AuthLayoutProps {
@@ -6,6 +8,10 @@ interface AuthLayoutProps {
   children: ReactNode;
 }
 const AuthLayout = ({ title, children }: AuthLayoutProps) => {
+  const isAuth = useAuthStore.use.isAuthenticated();
+  if (isAuth) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <div className="flex items-center justify-center  min-h-screen">
       <div className="hidden lg:flex h-screen flex-1/2 bg-primary"></div>

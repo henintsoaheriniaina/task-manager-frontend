@@ -1,7 +1,10 @@
+import api from "@/axios/api";
 import { registerSchema, type RegisterInput } from "@/schemas/auth-schemas";
+import useAuthStore from "@/stores/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 import { Controller, useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router"; // Import useNavigate
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
@@ -9,7 +12,15 @@ import { Input } from "../ui/input";
 import { TypographyP } from "../ui/typography";
 
 const RegisterForm = () => {
-  const form = useForm<RegisterInput>({
+  const navigate = useNavigate();
+  const setUser = useAuthStore.use.setUser();
+
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { isSubmitting },
+  } = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
@@ -18,22 +29,40 @@ const RegisterForm = () => {
     },
   });
 
-  const onSubmit = (data: RegisterInput) => {
-    toast.info("Submitted");
-    console.log(data);
+  const onSubmit = async (data: RegisterInput) => {
+    try {
+      const response = await api.post("/auth/register", data);
+      setUser(response.data.user);
+
+      toast.success("Account created successfully!");
+
+      navigate("/");
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      const errorMessage =
+        axiosError.response?.data?.message || "Registration failed";
+      toast.error(errorMessage);
+
+      setError("name", { message: errorMessage });
+      setError("password", { message: errorMessage });
+      setError("password", { message: errorMessage });
+      console.error("Register error:", errorMessage);
+    }
   };
+
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FieldGroup>
         <Controller
           name="name"
-          control={form.control}
+          control={control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="name">Name</FieldLabel>
               <Input
                 {...field}
                 id="name"
+                disabled={isSubmitting}
                 aria-invalid={fieldState.invalid}
                 placeholder="John Doe"
               />
@@ -41,9 +70,10 @@ const RegisterForm = () => {
             </Field>
           )}
         />
+
         <Controller
           name="email"
-          control={form.control}
+          control={control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -51,6 +81,7 @@ const RegisterForm = () => {
                 {...field}
                 id="email"
                 type="email"
+                disabled={isSubmitting}
                 aria-invalid={fieldState.invalid}
                 placeholder="johndoe@example.com"
               />
@@ -60,7 +91,7 @@ const RegisterForm = () => {
         />
 
         <Controller
-          control={form.control}
+          control={control}
           name="password"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -68,6 +99,7 @@ const RegisterForm = () => {
               <Input
                 {...field}
                 id="password"
+                disabled={isSubmitting}
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
                 type="password"
@@ -76,12 +108,20 @@ const RegisterForm = () => {
             </Field>
           )}
         />
-        <Button>Sign Up</Button>
+
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Creating account..." : "Sign Up"}
+        </Button>
+
         <TypographyP className="text-center">
-          Already have an account ? <Link to={"/login"}>Sign In</Link>
+          Already have an account?
+          <Link to={"/login"} className="underline">
+            Sign In
+          </Link>
         </TypographyP>
       </FieldGroup>
     </form>
   );
 };
+
 export default RegisterForm;

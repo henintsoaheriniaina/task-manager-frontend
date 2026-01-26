@@ -1,67 +1,46 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Settings2 } from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
+  SidebarFooter,
+  SidebarHeader,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
+import links from "@/lib/links";
+import { Link } from "react-router";
+import LogoutButton from "../auth/LogoutButton";
+import { TypographyH3 } from "../ui/typography";
+import LinksGroup from "./LinksGroup";
 
 export function AppSidebar() {
   return (
     <Sidebar>
+      <SidebarHeader>
+        <TypographyH3>Tasks</TypographyH3>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {links.map((l) => (
+          <LinksGroup
+            title={l.groupTitle}
+            links={l.links}
+            key={l.groupTitle}
+            isProtected={l.isProtected}
+          />
+        ))}
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenuItem>
+          <Link to={"/settigns"}>
+            <SidebarMenuButton>
+              <Settings2 />
+              Settigns
+            </SidebarMenuButton>
+          </Link>
+        </SidebarMenuItem>
+        <LogoutButton />
+      </SidebarFooter>
     </Sidebar>
   );
 }
