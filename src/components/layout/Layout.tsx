@@ -7,9 +7,11 @@ const Layout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="border p-2 w-full">
+      <main className=" w-full ">
         <MobileMenu />
-        <Outlet />
+        <div className="mt-10 md:mt-0 p-6 ">
+          <Outlet />
+        </div>
       </main>
     </SidebarProvider>
   );

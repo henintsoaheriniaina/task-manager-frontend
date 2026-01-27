@@ -1,67 +1,33 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarFooter,
+  SidebarHeader,
 } from "@/components/ui/sidebar";
-
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
+import links from "@/lib/links";
+import { TypographyH3 } from "../ui/typography";
+import LinksGroup from "./LinksGroup";
+import SidebarFooterItems from "./SidebarFooterItems";
 
 export function AppSidebar() {
   return (
     <Sidebar>
+      <SidebarHeader>
+        <TypographyH3>Tasks</TypographyH3>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {links.map((l) => (
+          <LinksGroup
+            title={l.groupTitle}
+            links={l.links}
+            key={l.groupTitle}
+            isProtected={l.isProtected}
+          />
+        ))}
       </SidebarContent>
+      <SidebarFooter className="pb-4">
+        <SidebarFooterItems />
+      </SidebarFooter>
     </Sidebar>
   );
 }
