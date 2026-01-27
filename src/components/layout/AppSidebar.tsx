@@ -1,18 +1,13 @@
-import { Settings2 } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import links from "@/lib/links";
-import { Link } from "react-router";
-import LogoutButton from "../auth/LogoutButton";
 import { TypographyH3 } from "../ui/typography";
 import LinksGroup from "./LinksGroup";
+import SidebarFooterItems from "./SidebarFooterItems";
 
 export function AppSidebar() {
   return (
@@ -30,16 +25,8 @@ export function AppSidebar() {
           />
         ))}
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenuItem>
-          <Link to={"/settigns"}>
-            <SidebarMenuButton>
-              <Settings2 />
-              Settigns
-            </SidebarMenuButton>
-          </Link>
-        </SidebarMenuItem>
-        <LogoutButton />
+      <SidebarFooter className="pb-4">
+        <SidebarFooterItems />
       </SidebarFooter>
     </Sidebar>
   );

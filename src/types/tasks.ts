@@ -11,7 +11,7 @@ export interface Task {
   status: TaskStatus;
   assignedTo?: string;
   createdBy: string;
-  dueDate?: Date;
+  dueDate: Date;
   createdAt: Date;
   updatedAt: Date;
 }

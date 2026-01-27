@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
-import { SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 
 const LogoutButton = () => {
   const navigate = useNavigate();
@@ -31,19 +30,15 @@ const LogoutButton = () => {
   };
 
   return (
-    <SidebarMenuItem key={"logout"}>
-      <SidebarMenuButton asChild>
-        <Button
-          onClick={handleLogout}
-          disabled={isLoading}
-          variant={"destructive"}
-          className="justify-start"
-        >
-          <LogOut />
-          {isLoading ? "Logging out..." : "Logout"}
-        </Button>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
+    <Button
+      onClick={handleLogout}
+      disabled={isLoading}
+      variant={"ghost"}
+      className="justify-start w-full text-destructive hover:text-destructive hover:bg-destructive/30"
+    >
+      <LogOut className="text-destructive " />
+      {isLoading ? "Logging out..." : "Logout"}
+    </Button>
   );
 };
 
