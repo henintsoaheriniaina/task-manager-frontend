@@ -31,9 +31,16 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginInput) => {
     try {
       const response = await api.post("/auth/login", data);
-      setUser(response.data.user);
+
+      const user = response.data.user;
       toast.success("Welcome back!");
-      navigate("/");
+      setUser(user);
+
+      if (user.role == "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
       const errorMessage =

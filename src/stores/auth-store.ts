@@ -1,7 +1,6 @@
 import type { User } from "@/types/user";
 import createSelectors from "@/utils/create-selectors";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
@@ -9,20 +8,12 @@ interface AuthState {
   logout: () => void;
 }
 
-const useAuthStoreBase = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
-      setUser: (user) => set({ user, isAuthenticated: !!user }),
-      logout: () => set({ user: null, isAuthenticated: false }),
-    }),
-    {
-      name: "auth-storage",
-      storage: createJSONStorage(() => sessionStorage),
-    },
-  ),
-);
+const useAuthStoreBase = create<AuthState>()((set) => ({
+  user: null,
+  isAuthenticated: false,
+  setUser: (user) => set({ user, isAuthenticated: !!user }),
+  logout: () => set({ user: null, isAuthenticated: false }),
+}));
 
 const useAuthStore = createSelectors(useAuthStoreBase);
 

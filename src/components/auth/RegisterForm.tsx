@@ -26,16 +26,21 @@ const RegisterForm = () => {
       name: "",
       email: "",
       password: "",
+      profile: "",
     },
   });
 
   const onSubmit = async (data: RegisterInput) => {
     try {
       const response = await api.post("/auth/register", data);
-      setUser(response.data.user);
 
-      toast.success("Account created successfully!");
+      const user = response.data.user;
+      toast.success(`Account created successfully! ${user.role}`);
+      setUser(user);
 
+      if (user.role == "admin") {
+        navigate("/admin");
+      }
       navigate("/");
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
@@ -53,6 +58,22 @@ const RegisterForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FieldGroup>
+        <Controller
+          name="profile"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="profile">Profile</FieldLabel>
+              <Input
+                {...field}
+                id="profile"
+                disabled={isSubmitting}
+                aria-invalid={fieldState.invalid}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
         <Controller
           name="name"
           control={control}
