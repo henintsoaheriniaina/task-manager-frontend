@@ -46,7 +46,7 @@ const sidebarGroups = [
 
     links: [
       {
-        title: "All Tasks",
+        title: "Assigned Tasks",
         url: "/tasks",
         icon: Clipboard,
         isProtected: false,

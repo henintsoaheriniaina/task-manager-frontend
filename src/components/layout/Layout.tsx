@@ -10,7 +10,7 @@ const Layout = () => {
   let title = "Default Title";
 
   for (const group of sidebarGroups) {
-    const foundLink = group.links.find((link) => link.url === pathname);
+    const foundLink = group.links.find((link) => link.url.startsWith(pathname));
     if (foundLink) {
       title = foundLink.title;
       break;
@@ -21,8 +21,10 @@ const Layout = () => {
       <AppSidebar />
       <main className=" w-full ">
         <MobileMenu />
-        <div className="mt-12 pt-6 md:mt-0 px-4 border border-red-600 flex flex-col">
-          <TypographyH2> {title} </TypographyH2>
+        <div className="mt-12 py-6 md:mt-0 px-4 0 flex flex-col">
+          <TypographyH2 className="mb-2 text-center lg:text-left">
+            {title}
+          </TypographyH2>
           <Outlet />
         </div>
       </main>

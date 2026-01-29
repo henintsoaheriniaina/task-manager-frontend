@@ -3,8 +3,10 @@ import Layout from "./components/layout/Layout";
 import { ProtectedRoute } from "./components/layout/ProtectedRoute";
 import Index from "./pages/Index";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminTasks from "./pages/admin/AdminTasks";
-import AdminUsers from "./pages/admin/AdminUsers";
+import AdminTasks from "./pages/admin/tasks/AdminTasks";
+import ShowTask from "./pages/admin/tasks/ShowTask";
+import AdminUsers from "./pages/admin/users/AdminUsers";
+import ShowUser from "./pages/admin/users/ShowUser";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import AllTasks from "./pages/tasks/AllTasks";
@@ -20,6 +22,22 @@ function App() {
       <Route path={"/register"} element={<Register />} />
 
       <Route path="/" element={<Layout />}>
+        {/* Admin routes */}
+        <Route
+          path="admin"
+          element={<ProtectedRoute allowedRoles={["admin"]} />}
+        >
+          <Route index element={<AdminDashboard />} />
+
+          {/* users */}
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="users/:id" element={<ShowUser />} />
+
+          {/* tasks */}
+          <Route path="tasks" element={<AdminTasks />} />
+          <Route path="tasks/:id" element={<ShowTask />} />
+        </Route>
+
         {/* User allowed */}
         <Route element={<ProtectedRoute />}>
           <Route index element={<Index />} />
@@ -29,15 +47,6 @@ function App() {
             <Route path="today" element={<TodayTasks />} />
             <Route path="calendar" element={<TasksCalendar />} />
           </Route>
-        </Route>
-        {/* Admin routes */}
-        <Route
-          path="/admin"
-          element={<ProtectedRoute allowedRoles={["admin"]} />}
-        >
-          <Route index element={<AdminDashboard />} />
-          <Route path="tasks" element={<AdminTasks />} />
-          <Route path="users" element={<AdminUsers />} />
         </Route>
       </Route>
     </Routes>

@@ -59,7 +59,7 @@ export function TypographyH4({ children, className }: TypographyProps) {
 }
 
 export function TypographyP({ children, className }: TypographyProps) {
-  return <p className={cn("leading-7", className)}>{children}</p>;
+  return <p className={cn(className)}>{children}</p>;
 }
 
 export function TypographyLarge({ children, className }: TypographyProps) {
@@ -70,9 +70,7 @@ export function TypographyLarge({ children, className }: TypographyProps) {
 
 export function TypographySmall({ children, className }: TypographyProps) {
   return (
-    <small className={cn("text-sm font-medium leading-none", className)}>
-      {children}
-    </small>
+    <small className={cn("text-sm font-medium ", className)}>{children}</small>
   );
 }
 
