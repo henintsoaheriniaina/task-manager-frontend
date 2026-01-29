@@ -16,6 +16,7 @@ import {
   FieldLabel,
 } from "../ui/field";
 import { Input } from "../ui/input";
+import AuthPlaceholder from "./AuthPlaceholder";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -66,7 +67,9 @@ const LoginForm = () => {
                 <h1 className="text-2xl font-bold">Welcome back</h1>
                 <p className="text-muted-foreground text-balance">
                   Login to your{" "}
-                  <span className="font-semibold text-primary">Task P</span>{" "}
+                  <span className="font-semibold text-primary">
+                    Power Tasks
+                  </span>{" "}
                   account
                 </p>
               </div>
@@ -123,11 +126,7 @@ const LoginForm = () => {
             </FieldGroup>
           </form>
           <div className="bg-muted relative hidden md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-            />
+            <AuthPlaceholder />
           </div>
         </CardContent>
       </Card>
