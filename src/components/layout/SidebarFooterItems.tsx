@@ -56,7 +56,7 @@ const SidebarFooterItems = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="right">
-            <Link to={"/settigns"}>
+            <Link to={"/settings"}>
               <DropdownMenuItem>
                 <Settings2 />
                 Settigns

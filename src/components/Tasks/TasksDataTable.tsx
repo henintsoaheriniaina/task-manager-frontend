@@ -23,9 +23,7 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { DataTablePagination } from "../ui/DataTablePagination";
-import { DataTableViewOptions } from "../ui/DataTableViewOptions";
-import { Input } from "../ui/input";
-import { TaskCreateDialog } from "./TaskCreateDialog";
+import { TaskDataTableToolbar } from "./TaskDataTableToolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -62,20 +60,7 @@ export function TasksDataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center  flex-col py-4 lg:flex-row lg:justify-between gap-4">
-        <Input
-          placeholder="Search..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm order-2 lg:order-1"
-        />
-        <div className="flex gap-4 order-1 lg:order-2">
-          <DataTableViewOptions table={table} />
-          <TaskCreateDialog />
-        </div>
-      </div>
+      <TaskDataTableToolbar table={table} />
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -126,7 +111,6 @@ export function TasksDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-
       <DataTablePagination table={table} />
     </div>
   );

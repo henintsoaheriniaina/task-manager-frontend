@@ -4,7 +4,7 @@ import useAuthStore from "@/stores/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router"; // Ajout navigate
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
@@ -37,12 +37,14 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginInput) => {
     try {
       const response = await api.post("/auth/login", data);
-
       const user = response.data.user;
-      toast.success("Welcome back!");
       setUser(user);
-
-      navigate("/admin");
+      toast.success("Welcome back!");
+      if (user.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/tasks", { replace: true });
+      }
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
       const errorMessage =

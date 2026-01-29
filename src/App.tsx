@@ -1,14 +1,13 @@
 import { Route, Routes } from "react-router";
-import Layout from "./components/layout/Layout";
-import { ProtectedRoute } from "./components/layout/ProtectedRoute";
-import Index from "./pages/Index";
+import Redirect from "./components/auth/Redirect";
+import AccessibleLayout from "./components/layout/AccessibleLayout";
+import AdminLayout from "./components/layout/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminTasks from "./pages/admin/tasks/AdminTasks";
-import ShowTask from "./pages/admin/tasks/ShowTask";
 import AdminUsers from "./pages/admin/users/AdminUsers";
-import ShowUser from "./pages/admin/users/ShowUser";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Settings from "./pages/auth/Settings";
 import AllTasks from "./pages/tasks/AllTasks";
 import TasksCalendar from "./pages/tasks/TasksCalendar";
 import TodayTasks from "./pages/tasks/TodayTasks";
@@ -21,33 +20,23 @@ function App() {
       <Route path={"/login"} element={<Login />} />
       <Route path={"/register"} element={<Register />} />
 
-      <Route path="/" element={<Layout />}>
-        {/* Admin routes */}
-        <Route
-          path="admin"
-          element={<ProtectedRoute allowedRoles={["admin"]} />}
-        >
-          <Route index element={<AdminDashboard />} />
-
-          {/* users */}
-          <Route path="users" element={<AdminUsers />} />
-          <Route path="users/:id" element={<ShowUser />} />
-
-          {/* tasks */}
-          <Route path="tasks" element={<AdminTasks />} />
-          <Route path="tasks/:id" element={<ShowTask />} />
+      {/* User allowed */}
+      <Route index element={<Redirect />} />
+      <Route element={<AccessibleLayout />}>
+        <Route path="settings" element={<Settings />} />
+        <Route path="tasks">
+          <Route index element={<AllTasks />} />
+          <Route path="upcoming" element={<UpcomingTasks />} />
+          <Route path="today" element={<TodayTasks />} />
+          <Route path="calendar" element={<TasksCalendar />} />
         </Route>
+      </Route>
 
-        {/* User allowed */}
-        <Route element={<ProtectedRoute />}>
-          <Route index element={<Index />} />
-          <Route path="tasks">
-            <Route index element={<AllTasks />} />
-            <Route path="upcoming" element={<UpcomingTasks />} />
-            <Route path="today" element={<TodayTasks />} />
-            <Route path="calendar" element={<TasksCalendar />} />
-          </Route>
-        </Route>
+      {/* Admin routes */}
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="tasks" element={<AdminTasks />} />
       </Route>
     </Routes>
   );

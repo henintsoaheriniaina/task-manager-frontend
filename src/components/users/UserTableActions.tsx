@@ -1,8 +1,9 @@
 import { useDeleteUser } from "@/hooks/use-users";
 import type { User } from "@/types/user";
-import { Edit, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { UserEditDrawer } from "./UserEditDrawer";
 import UserView from "./UserView";
 
 type UserTableActionsProps = {
@@ -22,9 +23,7 @@ const UserTableActions = ({ user }: UserTableActionsProps) => {
   };
   return (
     <div className="flex items-center justify-end gap-2">
-      <Button size={"icon-sm"}>
-        <Edit />
-      </Button>
+      <UserEditDrawer id={user._id} />
       <UserView id={user._id} />
 
       <Button size={"icon-sm"} variant={"destructive"} onClick={onDelete}>

@@ -11,6 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/drawer";
+import { TypographyH2 } from "../ui/typography";
 import { TaskStatusCell } from "./TaskStatusCell";
 type TaskViewProps = {
   id: string;
@@ -31,23 +32,15 @@ const TaskView = ({ id }: TaskViewProps) => {
             View all information about this task.
           </DrawerDescription>
         </DrawerHeader>
-        <div className="mx-auto  p-6 no-scrollbar overflow-y-auto px-4">
+        <div className=" no-scrollbar overflow-y-auto px-4">
           {isLoading ? (
             <div className="flex h-40 items-center justify-center">
               Loading task details...
             </div>
           ) : task ? (
-            <div className="space-y-6">
-              <div className="flex items-start justify-between">
-                <div className="space-y-1">
-                  <h2 className="text-2xl font-semibold leading-none tracking-tight">
-                    {task.title}
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Task ID:
-                    <span className="font-mono text-xs">{task._id}</span>
-                  </p>
-                </div>
+            <div className="space-y-6 w-full">
+              <div className="space-y-1 w-full">
+                <TypographyH2>{task.title}</TypographyH2>
                 <TaskStatusCell status={task.status} />
               </div>
 

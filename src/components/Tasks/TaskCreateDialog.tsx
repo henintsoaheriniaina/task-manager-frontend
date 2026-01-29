@@ -12,10 +12,9 @@ import {
 import { useCreateTask } from "@/hooks/use-tasks";
 import { cn } from "@/lib/utils";
 import { createTaskSchema, type CreateTaskInput } from "@/schemas/task-shema";
-import useAuthStore from "@/stores/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Plus } from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
@@ -44,12 +43,18 @@ export function TaskCreateDialog() {
     formState: { isSubmitting },
   } = useForm<CreateTaskInput>({
     resolver: zodResolver(createTaskSchema),
+    defaultValues: {
+      assignedTo: "",
+      description: "",
+      dueDate: new Date(),
+      status: "todo",
+      title: "",
+    },
   });
   const [open, setOpen] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
   const navigate = useNavigate();
   const { mutate } = useCreateTask();
-  const user = useAuthStore.use.user();
   const onSubmit = (data: CreateTaskInput) => {
     mutate(data, {
       onSuccess: () => {
@@ -69,6 +74,7 @@ export function TaskCreateDialog() {
     <Dialog open={open} onOpenChange={() => setOpen((p) => !p)}>
       <DialogTrigger asChild>
         <Button size={"sm"} className="h-8">
+          <Plus />
           Add task
         </Button>
       </DialogTrigger>

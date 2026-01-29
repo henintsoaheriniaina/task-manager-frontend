@@ -1,8 +1,9 @@
 import { useDeleteTask } from "@/hooks/use-tasks";
 import type { Task } from "@/types/tasks";
-import { Edit, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { TaskEditDrawer } from "./TaskEditDrawer";
 import TaskView from "./TaskView";
 
 type TaskTableActionProps = {
@@ -22,9 +23,7 @@ const TaskTableAction = ({ task }: TaskTableActionProps) => {
   };
   return (
     <div className="flex items-center justify-end gap-2">
-      <Button size={"icon-sm"}>
-        <Edit />
-      </Button>
+      <TaskEditDrawer id={task._id} />
       <TaskView id={task._id} />
       <Button size={"icon-sm"} variant={"destructive"} onClick={onDelete}>
         <Trash2 />
