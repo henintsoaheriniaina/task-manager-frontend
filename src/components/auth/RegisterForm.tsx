@@ -16,6 +16,7 @@ import {
   FieldLabel,
 } from "../ui/field";
 import { Input } from "../ui/input";
+import AuthPlaceholder from "./AuthPlaceholder";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -65,11 +66,7 @@ const RegisterForm = () => {
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <div className="bg-muted relative hidden md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-            />
+            <AuthPlaceholder />
           </div>
           <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
@@ -77,7 +74,9 @@ const RegisterForm = () => {
                 <h1 className="text-2xl font-bold">Welcome back</h1>
                 <p className="text-muted-foreground text-balance">
                   Login to your{" "}
-                  <span className="font-semibold text-primary">Task P</span>{" "}
+                  <span className="font-semibold text-primary">
+                    Power Tasks
+                  </span>{" "}
                   account
                 </p>
               </div>
@@ -92,6 +91,7 @@ const RegisterForm = () => {
                       id="profile"
                       disabled={isSubmitting}
                       aria-invalid={fieldState.invalid}
+                      placeholder="Profile Url"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
