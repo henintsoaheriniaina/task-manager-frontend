@@ -1,3 +1,5 @@
+import type { User } from "./user";
+
 export enum TaskStatus {
   TODO = "todo",
   IN_PROGRESS = "in_progress",
@@ -9,8 +11,8 @@ export interface Task {
   title: string;
   description: string;
   status: TaskStatus;
-  assignedTo?: string;
-  createdBy: string;
+  assignedTo: User;
+  createdBy: User;
   dueDate: Date;
   createdAt: Date;
   updatedAt: Date;

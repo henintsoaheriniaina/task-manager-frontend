@@ -1,3 +1,5 @@
+import type { Task } from "./tasks";
+
 export enum UserRole {
   ADMIN = "admin",
   USER = "user",
@@ -11,4 +13,6 @@ export interface User {
   role: UserRole;
   createdAt: Date;
   updatedAt: Date;
+  assignedTasks: Task[];
+  createdTasks: Task[];
 }

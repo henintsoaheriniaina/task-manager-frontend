@@ -2,6 +2,7 @@ import {
   Calendar,
   ChartBarBig,
   ChevronsRight,
+  Clipboard,
   List,
   ListChecks,
   Users,
@@ -13,7 +14,7 @@ export type MenuItem = {
   icon: LucideIcon;
   isProtected: boolean;
 };
-const links = [
+const sidebarGroups = [
   {
     groupTitle: "Admin",
     isProtected: true,
@@ -45,6 +46,12 @@ const links = [
 
     links: [
       {
+        title: "Assigned Tasks",
+        url: "/tasks",
+        icon: Clipboard,
+        isProtected: false,
+      },
+      {
         title: "Upcoming",
         url: "/tasks/upcoming",
         icon: ChevronsRight,
@@ -66,4 +73,4 @@ const links = [
   },
 ];
 
-export default links;
+export default sidebarGroups;

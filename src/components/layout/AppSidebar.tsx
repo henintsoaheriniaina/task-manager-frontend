@@ -4,7 +4,7 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import links from "@/lib/links";
+import sidebarGroups from "@/lib/links";
 import { TypographyH3 } from "../ui/typography";
 import LinksGroup from "./LinksGroup";
 import SidebarFooterItems from "./SidebarFooterItems";
@@ -12,20 +12,20 @@ import SidebarFooterItems from "./SidebarFooterItems";
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>
+      <SidebarHeader className="pt-6">
         <TypographyH3>Tasks</TypographyH3>
       </SidebarHeader>
       <SidebarContent>
-        {links.map((l) => (
+        {sidebarGroups.map((group) => (
           <LinksGroup
-            title={l.groupTitle}
-            links={l.links}
-            key={l.groupTitle}
-            isProtected={l.isProtected}
+            title={group.groupTitle}
+            links={group.links}
+            key={group.groupTitle}
+            isProtected={group.isProtected}
           />
         ))}
       </SidebarContent>
-      <SidebarFooter className="pb-4">
+      <SidebarFooter className="pb-6">
         <SidebarFooterItems />
       </SidebarFooter>
     </Sidebar>
