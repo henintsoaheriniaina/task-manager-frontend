@@ -1,5 +1,4 @@
 import { AccessibleTaskGrid } from "@/components/Tasks/AccessibleTasksGrid";
-import { Skeleton } from "@/components/ui/skeleton";
 import { TypographyLarge } from "@/components/ui/typography";
 import { useGetTasks } from "@/hooks/use-tasks";
 import { CheckCircle2, ClipboardList, Clock, TrendingUp } from "lucide-react";
@@ -75,22 +74,6 @@ function StatCard({
         {icon}
       </div>
       <div className="text-2xl font-bold">{value}</div>
-    </div>
-  );
-}
-
-function DashboardSkeleton() {
-  return (
-    <div className="space-y-8">
-      <div className="grid gap-4 md:grid-cols-4">
-        {[1, 2, 3, 4].map((i) => (
-          <Skeleton key={i} className="h-24 w-full" />
-        ))}
-      </div>
-      <div className="grid gap-4 md:grid-cols-7">
-        <Skeleton className="col-span-4 h-100" />
-        <Skeleton className="col-span-3 h-100" />
-      </div>
     </div>
   );
 }

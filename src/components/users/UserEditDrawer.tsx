@@ -10,11 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useGetUser, useUpdateUser } from "@/hooks/use-users";
-import {
-  updateUserSchema,
-  type CreateUserInput,
-  type UpdateUserInput,
-} from "@/schemas/user.schema";
+import { updateUserSchema, type UpdateUserInput } from "@/schemas/user.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -60,7 +56,7 @@ export function UserEditDrawer({ id }: UserEditDrawerProps) {
     }
   }, [user, reset]);
 
-  const onSubmit = (data: CreateUserInput) => {
+  const onSubmit = (data: UpdateUserInput) => {
     updateUser(
       { id, ...data },
       {
