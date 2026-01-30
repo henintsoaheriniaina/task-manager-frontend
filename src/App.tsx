@@ -1,43 +1,55 @@
 import { Route, Routes } from "react-router";
+import { AuthGuard } from "./components/auth/AuthGuard";
 import Redirect from "./components/auth/Redirect";
-import AccessibleLayout from "./components/layout/AccessibleLayout";
-import AdminLayout from "./components/layout/AdminLayout";
+import DashboardLayout from "./components/layout/DashboardLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminTasks from "./pages/admin/tasks/AdminTasks";
 import AdminUsers from "./pages/admin/users/AdminUsers";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Settings from "./pages/auth/Settings";
+import { ErrorPage } from "./pages/ErrorPage";
 import AllTasks from "./pages/tasks/AllTasks";
 import TasksCalendar from "./pages/tasks/TasksCalendar";
 import TodayTasks from "./pages/tasks/TodayTasks";
 import UpcomingTasks from "./pages/tasks/UpcomingTasks";
-
 function App() {
   return (
     <Routes>
       {/* auth */}
-      <Route path={"/login"} element={<Login />} />
-      <Route path={"/register"} element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-      {/* User allowed */}
-      <Route index element={<Redirect />} />
-      <Route element={<AccessibleLayout />}>
-        <Route path="settings" element={<Settings />} />
-        <Route path="tasks">
-          <Route index element={<AllTasks />} />
-          <Route path="upcoming" element={<UpcomingTasks />} />
-          <Route path="today" element={<TodayTasks />} />
-          <Route path="calendar" element={<TasksCalendar />} />
+      <Route element={<AuthGuard />}>
+        <Route element={<DashboardLayout />}>
+          {/* accessible by auth */}
+          <Route index element={<Redirect />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="tasks" element={<AllTasks />} />
+          <Route path="tasks/upcoming" element={<UpcomingTasks />} />
+          <Route path="tasks/today" element={<TodayTasks />} />
+          <Route path="tasks/calendar" element={<TasksCalendar />} />
+
+          {/* admin*/}
+          <Route element={<AuthGuard allowedRoles={["admin"]} />}>
+            <Route path="admin">
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="tasks" element={<AdminTasks />} />
+            </Route>
+          </Route>
         </Route>
       </Route>
 
-      {/* Admin routes */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashboard />} />
-        <Route path="users" element={<AdminUsers />} />
-        <Route path="tasks" element={<AdminTasks />} />
-      </Route>
+      {/* Global Errors */}
+      <Route
+        path="/403"
+        element={<ErrorPage code="403" title="Access Forbidden" />}
+      />
+      <Route
+        path="*"
+        element={<ErrorPage code="404" title="Page Not Found" />}
+      />
     </Routes>
   );
 }
